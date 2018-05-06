@@ -23,4 +23,14 @@ def reverse(x):
     :type x: int
     :rtype: int
     """
-    pass
+    s = str(x)
+    is_negative = s.startswith('-')
+    min_return_value = -2**31
+    max_return_value = 2**31 - 1
+
+    solution = -int(s[1:][::-1]) if(is_negative) else int(s[::-1])
+    
+    if min_return_value <= solution <= max_return_value:
+        return solution
+    
+    return 0
