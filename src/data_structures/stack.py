@@ -1,21 +1,21 @@
+from src.data_structures.linked_list import DoublyLinkedList
+
+
 class Stack:
     def __init__(self):
-        self.store = []
+        self.store = DoublyLinkedList()
 
     def _is_empty(self):
-        return len(self.store) == 0
+        return self.store.peek_head() == None
 
     def push(self, item):
-        self.store.append(item)
+        self.store.insert_at_head(item)
 
     def pop(self):
         if(self._is_empty()):
             return None
 
-        return self.store.pop()
+        return self.store.remove_at_head()
 
     def peek(self):
-        if(self._is_empty()):
-            return None
-
-        return self.store[-1]
+        return self.store.peek_head()
