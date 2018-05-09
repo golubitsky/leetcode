@@ -16,21 +16,23 @@
 from src.data_structures.graph import Graph
 from src.data_structures.queue import Queue
 from src.data_structures.linked_list import DoublyLinkedList
+from collections import defaultdict
+import math
 
 
-def trace_path_back(begin_word, end_word, parent_of):
-    print(parent_of)
-    if (end_word in parent_of):
-        path = DoublyLinkedList()
-        cur_word = end_word
-        while(True):
-            path.insert_at_head(cur_word)
-            if (cur_word == begin_word):
-                break
+def dfs(parent_of, node, all_paths, current_path):
+    current_path.insert_at_tail(node)
 
-            cur_word = parent_of[cur_word]
+    # path ends here
+    if (node not in parent_of):
+        reversed_path = current_path.to_array_from_tail()
+        all_paths.insert_at_tail(reversed_path)
+    else:
+        for parent in parent_of[node]:
+            dfs(parent_of, parent, all_paths, current_path)
 
-        return path.to_array_from_head()
+    # backtrack
+    current_path.remove_at_tail()
 
 
 def find_ladders(beginWord, endWord, wordList):
@@ -44,22 +46,34 @@ def find_ladders(beginWord, endWord, wordList):
     graph_words = [beginWord] + wordList
     graph = Graph.from_same_length_word_list(graph_words)
 
-    encountered = set() # set parent
-    parent_of = {}  # to trace our path back when we find the target
-
+    # to trace our path back when we find the target
+    parent_of = defaultdict(lambda: [])
+    depth = defaultdict(lambda: math.inf)
+    depth[beginWord] = 0
     queue = Queue()
     queue.enqueue(beginWord)
 
-    depth = 0
+    success = False
     while(not queue.is_empty()):
-        current_word = queue.dequeue()
-        encountered.add(current_word)
+        current = queue.dequeue()
+        if (current == endWord):
+            success = True
 
-        for child in graph.get_neighbors(current_word):
-            if (child not in encountered):
-                parent_of[child] = current_word
+        for child in graph.get_neighbors(current):
+            not_encountered_yet = depth[child] == math.inf
+            already_encountered_at_same_depth = depth[child] == depth[current] + 1
+
+            if (not_encountered_yet):
+                depth[child] = depth[current] + 1
+                parent_of[child].append(current)
                 queue.enqueue(child)
-                encountered.add(child)
+            elif(already_encountered_at_same_depth):
+                parent_of[child].append(current)
 
-            if (child == endWord):
-                return trace_path_back(beginWord, endWord, parent_of)
+    if success:
+        all_paths = DoublyLinkedList()
+        current_path = DoublyLinkedList()
+        dfs(parent_of, endWord, all_paths, current_path)
+        return all_paths.to_array_from_head()
+    else:
+        return []

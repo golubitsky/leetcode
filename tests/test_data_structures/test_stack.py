@@ -7,7 +7,7 @@ class TestStack(unittest.TestCase):
         self.sut = stack.Stack()
 
     def test_is_empty_on_initialize(self):
-        assert self.sut.peek() == None
+        assert self.sut.is_empty()
 
     def test_peek_shows_last_pushed_item(self):
         self.sut.push(1)
