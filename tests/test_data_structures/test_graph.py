@@ -41,7 +41,7 @@ class TestGraph(unittest.TestCase):
 
         # assert
         assert not self.sut.node_exists('test')
-    
+
     def test_remove_node_removes_edge_from_neighbor(self):
         # arrange
         self.sut.add_edge('a', 'b')
@@ -105,3 +105,14 @@ class TestGraph(unittest.TestCase):
         assert actual.edge_exists("ac", "ab")
         assert actual.edge_exists("bc", "ac")
         assert actual.edge_exists("ac", "bc")
+
+    def test_from_list_creates_appropriate_edges_2(self):
+        # arrange
+        words = ["hot", "dot", "dog", "lot", "log", "cog"]
+
+        # act
+        actual = graph.Graph.from_same_length_word_list(words)
+
+        # assert
+        assert actual.edge_exists("hot", "lot")
+        assert actual.edge_exists("dog", "cog")

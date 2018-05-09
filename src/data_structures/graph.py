@@ -19,7 +19,7 @@ class Graph:
 
         for word in word_list:
             if len(word) != word_length:
-                raise ValueError("All words must be same length.")
+                raise ValueError(f"All words must be same length -- {word_list[0]} != {word}.")
 
             for i in range(len(word)):
                 bucket = f"{word[:i]}_{word[i + 1:]}"
