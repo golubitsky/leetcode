@@ -73,3 +73,35 @@ class TestGraph(unittest.TestCase):
         # assert
         assert self.sut.node_exists('a')
         assert self.sut.node_exists('b')
+
+    def test_from_list_throws_for_not_same_length_words(self):
+        # arrange
+        words = ["ab", "abc"]
+
+        # act / assert
+        self.assertRaises(
+            ValueError, graph.Graph.from_same_length_word_list, words)
+
+    def test_from_list_inserts_all_words(self):
+        # arrange
+        words = ["ab", "ac", "bc"]
+
+        # act
+        actual = graph.Graph.from_same_length_word_list(words)
+
+        # assert
+        for word in words:
+            assert actual.node_exists(word)
+
+    def test_from_list_creates_appropriate_edges(self):
+        # arrange
+        words = ["ab", "ac", "bc"]
+
+        # act
+        actual = graph.Graph.from_same_length_word_list(words)
+
+        # assert
+        assert actual.edge_exists("ab", "ac")
+        assert actual.edge_exists("ac", "ab")
+        assert actual.edge_exists("bc", "ac")
+        assert actual.edge_exists("ac", "bc")

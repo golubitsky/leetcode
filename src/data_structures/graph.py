@@ -1,9 +1,39 @@
+from collections import defaultdict
+
+
 class Graph:
     """
         Currently only an undirected graph 
         built with directedness in mind.
         TODO: build directedness.
     """
+
+    @classmethod
+    def from_same_length_word_list(self, word_list):
+        """
+            Factory method to construct a graph using 
+        """
+        g = Graph()
+        word_length = len(word_list[0])
+        buckets = defaultdict(lambda: [])
+
+        for word in word_list:
+            if len(word) != word_length:
+                raise ValueError("All words must be same length.")
+
+            for i in range(len(word)):
+                bucket = f"{word[:i]}_{word[i + 1:]}"
+                buckets[bucket].append(word)
+
+        for bucket in buckets:
+            adjacent_words = buckets[bucket]
+            for i in range(len(adjacent_words)):
+                word = adjacent_words[i]
+                other_words = adjacent_words[:i] + adjacent_words[i + 1:]
+                for other_word in other_words:
+                    g.add_edge(word, other_word)
+
+        return g
 
     def __init__(self):
         self._nodes = {}  # data => node
