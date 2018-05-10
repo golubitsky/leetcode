@@ -2,13 +2,14 @@ class BinaryTreeNode:
 
     @classmethod
     def __construct_from_list(self, list):
-        pass
+        raise NotImplementedError
 
     @classmethod
     def construct_from_list(self, list):
         """
         [4,-7,-3,null,null,-9,-3,9,-7,-4,null,6,null,-6,-6,null,null,0,6,5,null,9,null,null,-1,-4,null,null,null,-2]
         """
+        raise NotImplementedError
 
     def __init__(self, data):
         self.data = data
