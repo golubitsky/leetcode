@@ -1,4 +1,5 @@
 import random
+from src.data_structures.heap import MinHeap
 
 
 def _merge(left, right):
@@ -59,3 +60,33 @@ def quick_sort(arr):
             right.append(arr[i])
 
     return quick_sort(left) + [arr[pivot]] + quick_sort(right)
+
+
+def selection_sort(arr):
+    # don't modify the input; this whole method is silly,
+    # but the point is heap_sort below
+    input = arr.copy()
+    sorted = []
+
+    while(len(input)):
+        m = min(input)
+        sorted.append(m)
+        input.remove(m)
+
+    return sorted
+
+
+def heap_sort(arr):
+    """
+    Skiena: "heapsort is nothing but an implementation of selection sort
+        using the right data structure."
+    """
+    heap = MinHeap()
+    for el in arr:
+        heap.insert(el)
+
+    sorted = []
+    while(heap.size() > 0):
+        sorted.append(heap.extract_min())
+
+    return sorted
