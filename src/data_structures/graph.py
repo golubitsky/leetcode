@@ -11,7 +11,8 @@ class Graph:
     @classmethod
     def from_same_length_word_list(self, word_list):
         """
-            Factory method to construct a graph using 
+            Factory method to construct a graph using a list of words, "word ladder" style.
+            All words must be the same length.
         """
         g = Graph()
         word_length = len(word_list[0])
@@ -19,7 +20,8 @@ class Graph:
 
         for word in word_list:
             if len(word) != word_length:
-                raise ValueError(f"All words must be same length -- {word_list[0]} != {word}.")
+                raise ValueError(
+                    f"All words must be same length -- {word_list[0]} != {word}.")
 
             for i in range(len(word)):
                 bucket = f"{word[:i]}_{word[i + 1:]}"
