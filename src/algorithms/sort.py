@@ -1,3 +1,6 @@
+import random
+
+
 def _merge(left, right):
     merged = []
     i_left = i_right = 0
@@ -36,3 +39,23 @@ def merge_sort(arr):
     right = merge_sort(arr[len(arr) // 2:])
 
     return _merge(left, right)
+
+
+def quick_sort(arr):
+    if(len(arr) <= 1):
+        return arr
+
+    # split into left less than pivot, right greater than pivot
+    pivot = random.randint(0, len(arr) - 1)
+    left = []
+    right = []
+    for i in range(len(arr)):
+        if(i == pivot):
+            continue
+
+        if(arr[i] <= arr[pivot]):
+            left.append(arr[i])
+        else:
+            right.append(arr[i])
+
+    return quick_sort(left) + [arr[pivot]] + quick_sort(right)

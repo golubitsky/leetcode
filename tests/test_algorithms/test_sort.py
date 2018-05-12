@@ -13,3 +13,7 @@ test_data = [
 @pytest.mark.parametrize("input,sorted", test_data)
 def test_merge_sort(input, sorted):
     assert sut.merge_sort(input) == sorted
+
+@pytest.mark.parametrize("input,sorted", test_data)
+def test_quick_sort(input, sorted):
+    assert sut.quick_sort(input) == sorted
