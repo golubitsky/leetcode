@@ -62,7 +62,6 @@ def is_valid(s):
         if(is_closing_paren(char)):
             if(are_balanced(stk.peek(), char)):
                 stk.pop()  # close paren
-                print(stk.peek())
             else:
                 return False  # can't close -- fail
         else:
