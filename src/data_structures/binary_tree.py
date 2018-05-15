@@ -6,6 +6,42 @@ class BinaryTreeNode:
     __unassigned = -1
 
     @classmethod
+    def buildTree(self, inorder, postorder):
+        if inorder:
+            ind = inorder.index(postorder.pop())
+            root = BinaryTreeNode(inorder[ind])
+            root.right = self.buildTree(inorder[ind+1:], postorder)
+            root.left = self.buildTree(inorder[:ind], postorder)
+            return root
+
+    @classmethod
+    def construct_from_in_and_post_orders(self, in_order, post_order):
+        return BinaryTreeNode.buildTree(in_order, post_order)
+        if(len(in_order) == 0):
+            return None
+        if(len(in_order) == 1):
+            return BinaryTreeNode(in_order[0])
+        # Assume that duplicates do not exist in the tree.
+
+        # root is always the last node in post_order
+        root = post_order.pop()
+        root_index_in_order = in_order.index(root)
+        # thus we can split in_order on the root
+        in_left = in_order[:root_index_in_order]
+        in_right = in_order[root_index_in_order + 1:]
+
+        # recurse
+        right_tree = BinaryTreeNode.construct_from_in_and_post_orders(
+            in_right, post_order)
+        left_tree = BinaryTreeNode.construct_from_in_and_post_orders(
+            in_left, post_order)
+
+        # put it together
+        tree = BinaryTreeNode(root)
+        tree.left, tree.right = left_tree, right_tree
+        return tree
+
+    @classmethod
     def __node_for_construction(self, data):
         if(data is None):
             return data

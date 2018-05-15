@@ -1,4 +1,5 @@
 from src.data_structures.binary_tree import BinaryTreeNode
+import pytest
 
 # arrange
 #   1
@@ -96,3 +97,27 @@ def test_construct_from_list_complex():
     # assert
     expected = list(filter(lambda x: x is not None, input))
     assert actual == expected
+
+
+test_data = [
+    ([1, 2, 3, 4], [2, 1, 4, 3]),
+    ([9, 3, 15, 20, 7], [9, 15, 7, 20, 3]),
+]
+
+
+@pytest.mark.parametrize("in_order,post_order", test_data)
+def test_construct_from_in_and_post_orders(in_order, post_order):
+    actual = BinaryTreeNode.construct_from_in_and_post_orders(
+        in_order, post_order.copy())
+
+    assert actual.traverse_post_order() == post_order
+
+
+def test_construct_from_in_and_post_orders_empty():
+    inorder = []
+    postorder = []
+
+    actual = BinaryTreeNode.construct_from_in_and_post_orders(
+        inorder, postorder)
+
+    assert actual == None
