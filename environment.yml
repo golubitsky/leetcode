@@ -1,0 +1,5 @@
+name: leetcode
+dependencies:
+- python=3
+- regex
+- pytest-xdist # makes pytest -f option available
