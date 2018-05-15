@@ -36,3 +36,16 @@ def test_subsets_multiple_elements():
 
     # also ensure same number of elements
     assert len(actual) == len(expected)
+
+
+def test_max_after_all_operations():
+    operations = [
+        [1, 2, 100],
+        [2, 5, 100],
+        [3, 4, 100]
+    ]
+    n = 5
+
+    actual = sut.max_after_all_operations(n, operations)
+
+    assert actual == 200
